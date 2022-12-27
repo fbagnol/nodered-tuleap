@@ -1,0 +1,25 @@
+{
+    "name": "node-red-contrib-tuleap",
+    "version": "0.0.1",
+    "description": "Nodes for using Tuleap REST API",
+    "license": "GPL-3.0",
+    "author": {
+        "name": "Frédéric BAGNOL",
+        "email": "frederic.bagnol@gmail.com",
+        "url": "https://github.com/fbagnol/"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/fbagnol/nodered-tuleap.git"
+    },
+    "dependencies": {
+        "request": "2.79.0",
+        "debug": "2.6.0"
+    },
+    "keywords": ["node-red"],
+    "node-red": {
+        "nodes": {
+            "sample": "tuleap/tuleap.js"
+        }
+    }
+}
