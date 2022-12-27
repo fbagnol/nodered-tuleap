@@ -1,0 +1,148 @@
+<!--
+//
+//     Copyright (C) 2022  Frédéric BAGNOL
+//
+//     This program is free software: you can redistribute it and/or modify
+//     it under the terms of the GNU General Public License as published by
+//     the Free Software Foundation, either version 3 of the License, or
+//     (at your option) any later version.
+//
+//     This program is distributed in the hope that it will be useful,
+//     but WITHOUT ANY WARRANTY; without even the implied warranty of
+//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//     GNU General Public License for more details.
+//
+//     You should have received a copy of the GNU General Public License
+//     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- *************** Server Node *************** -->
+<script type="text/javascript">
+    RED.nodes.registerType('tuleap-server', {
+        category: 'config',
+        defaults: {
+            url: {
+                required: true
+            },
+            name: {
+                value: "",
+                required: true
+            }
+        },
+        credentials: {
+            token: {
+                type: "text"
+            }
+        },
+        label: function() {
+            return this.name ||  "tuleap-server";
+        }
+    });
+</script>
+<script type="text/x-red" data-template-name="tuleap-server">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-url"><i class="icon-white-globe"></i> URL</label>
+        <input type="text" id="node-config-input-url" placeholder="https://tuleap.example.com/api/v1/">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-token"><i class="icon-tag"></i> Token</label>
+        <input type="text" id="node-config-input-token" placeholder="">
+    </div>
+</script>
+
+
+
+<!-- *************** Search Node *************** -->
+<script type="text/javascript">
+    RED.nodes.registerType('tuleap-artefact-search', {
+        category: 'tuleap',
+        color: '#ff9300',
+        defaults: {
+            name: {
+                value: ""
+            },
+            server: {
+                value: "",
+                type: "tuleap-server"
+            },
+            query: {
+                value: "payload"
+            },
+            limit: {
+                value: 100,
+                validate: RED.validators.number()
+            },
+            offset: {
+                value: 0,
+                validate: RED.validators.number()
+            }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "nodered-contrib-tuleap-icon.png",
+        label: function() {
+            return this.name || "tuleap-artefact-search";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="tuleap-artefact-search">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-server"><i class="icon-db"></i> Server</label>
+        <input type="text" id="node-input-server" placeholder="Server">
+    </div>
+    <div class="form-row">
+        <label for="node-input-query"><i class="icon-function"></i> query</label>
+        <input type="text" id="node-input-query" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-limit"><i class="icon-tag"></i> Limit</label>
+        <input type="text" id="node-input-limit" value="100">
+    </div>
+    <div class="form-row">
+        <label for="node-input-offset"><i class="icon-tag"></i> Offset</label>
+        <input type="text" id="node-input-offset" value="">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="tuleap-artefact-search">
+    <p>A node to perform artefact searches via Tuleaps REST API.</p>
+    <b>Configuration</b>
+    <ul>
+        <li>
+            <b>Name</b> Choose any name to identify your node.
+        </li>
+        <li>
+            <b>Server</b> Choose the Tuleap server instance to use.
+        </li>
+        <li>
+            <b>JQL</b> The <a href="https://confluence.atlassian.com/jirasoftwarecloud/advanced-searching-764478330.html#Advancedsearching-ConstructingJQLqueries" target="_blank">JQL query</a> to execute.
+        </li>
+        <li>
+            <b>Pagesize</b> How many issues to fetch in a single call to the JIRA API.
+        </li>
+    </ul>
+    <b>Input</b>
+    <ul>
+        <li>
+            Any message will trigger the search.
+        </li>
+    </ul>
+    <b>Output</b>
+    <ul>
+        <li>
+            <code>msg.payload</code> contains the issue.
+        </li>
+        <li>
+            <code>msg.topic</code> contains the issue key.
+        </li>
+    </ul>
+</script>
