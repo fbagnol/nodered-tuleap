@@ -7,8 +7,8 @@ module.exports = function(RED) {
         RED.nodes.createNode(this, config);
         var node = this;
         var query = config.query;
+        var id = config.id;
         var server = RED.nodes.getNode(config.server);
-        var maxArtefact = config.pagesize || 100;
 
 
         this.on('input', function(msg) {
@@ -27,8 +27,6 @@ module.exports = function(RED) {
             var toIndex = startIndex + maxIssues;
             var options = {
                 "startAt": startIndex,
-                "maxResults": maxIssues,
-                "fields": ["key", "title", "summary", "labels", "status", "issuetype", "description", "reporter", "created", "environment", "priority", "comment"]
             };
             var rqcallback = function(errors, response, body) {
                 if (errors) {
@@ -44,7 +42,6 @@ module.exports = function(RED) {
                     if (issues) {
 
                         node.log("Processing issues " + startIndex + " to " + toIndex + " of total " + issues.total);
-                        //console.log(issues);
                         issues.issues.forEach(callback);
                     }
 
@@ -90,8 +87,9 @@ module.exports = function(RED) {
 
 
         this.doRequest = function(options, callback) {
-            options.auth = {
-                'token': token,
+            options.headers = {
+                'X-Auth-Token': token,
+                'accept': 'application/json'
             };
             this.log("DoRequest " + options);
             request(options, callback);
@@ -103,7 +101,7 @@ module.exports = function(RED) {
 
             var options = {
                 rejectUnauthorized: false,
-                uri: decodeURIComponent(url + 'search'),
+                uri: decodeURIComponent(url + '/trackers/' + id + '/artifacts?limit=&expert_query=Description%20%3D%20%22GED4%22'),
                 method: 'GET',
                 json: true,
                 followAllRedirects: true,

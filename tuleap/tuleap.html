@@ -69,6 +69,9 @@
                 value: "",
                 type: "tuleap-server"
             },
+            id: {
+                value: "id du tracker"
+            },
             query: {
                 value: "payload"
             },
@@ -100,6 +103,10 @@
         <input type="text" id="node-input-server" placeholder="Server">
     </div>
     <div class="form-row">
+        <label for="node-input-id"><i class="icon-function"></i> id</label>
+        <input type="text" id="node-input-id" placeholder="">
+    </div>
+    <div class="form-row">
         <label for="node-input-query"><i class="icon-function"></i> query</label>
         <input type="text" id="node-input-query" placeholder="">
     </div>
@@ -124,7 +131,10 @@
             <b>Server</b> Choose the Tuleap server instance to use.
         </li>
         <li>
-            <b>JQL</b> The <a href="https://confluence.atlassian.com/jirasoftwarecloud/advanced-searching-764478330.html#Advancedsearching-ConstructingJQLqueries" target="_blank">JQL query</a> to execute.
+            <b>Id</b> Id of the tracker where to search artefacts.
+        </li>
+        <li>
+            <b>Query</b> The query to execute.
         </li>
         <li>
             <b>Pagesize</b> How many issues to fetch in a single call to the JIRA API.
@@ -139,7 +149,7 @@
     <b>Output</b>
     <ul>
         <li>
-            <code>msg.payload</code> contains the issue.
+            <code>msg.payload</code> contains the result.
         </li>
         <li>
             <code>msg.topic</code> contains the issue key.
