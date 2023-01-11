@@ -97,7 +97,7 @@ module.exports = function(RED) {
             var options = {
                 rejectUnauthorized: false,
                 strictSSL: false,
-                uri: decodeURIComponent(url + 'trackers/' + options.id + '/artifacts?values=all&limit=100&offset=0&expert_query=' + query + '&order=asc'),
+                uri: decodeURIComponent(url + 'trackers/' + options.id + '/artifacts?values=all&limit=100&offset=0&query=' + query + '&order=asc'),
                 method: 'GET',
                 json: true,
                 followAllRedirects: true,
