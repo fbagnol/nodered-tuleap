@@ -13,7 +13,7 @@ module.exports = function(RED) {
 
         this.on('input', function(msg) {
             this.log("Performing search '" + query + "'");
-            node.perform(query, function(artefact, index, array) {
+            node.perform(query, id, function(artefact, index, array) {
                 var msg = {};
                 msg.topic = "?";
                 msg.payload = artefact;
@@ -22,10 +22,11 @@ module.exports = function(RED) {
             });
         });
 
-        this.perform = function(query, callback, startIndex = 0) {
+        this.perform = function(query, id, callback, startIndex = 0) {
 
             var options = {
                 "startAt": startIndex,
+                "id": id,
             };
             var rqcallback = function(errors, response, body) {
                 if (errors) {
@@ -95,7 +96,7 @@ module.exports = function(RED) {
 
             var options = {
                 rejectUnauthorized: false,
-                uri: decodeURIComponent(url + '/trackers/' + id + '/artifacts?values=all&limit=100&offset=0&expert_query=' + query + '&order=asc'),
+                uri: decodeURIComponent(url + '/trackers/' + options.id + '/artifacts?values=all&limit=100&offset=0&expert_query=' + query + '&order=asc'),
                 method: 'GET',
                 json: true,
                 followAllRedirects: true,
