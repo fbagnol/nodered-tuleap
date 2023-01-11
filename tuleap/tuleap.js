@@ -83,7 +83,7 @@ module.exports = function(RED) {
 
         this.doRequest = function(options, callback) {
             options.headers = {
-                'X-Auth-Token': token,
+                'X-Auth-AccessKey': token,
                 'accept': 'application/json'
             };
             this.log("DoRequest " + options);
