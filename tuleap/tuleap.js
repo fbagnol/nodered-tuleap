@@ -100,13 +100,13 @@ module.exports = function(RED) {
                 json: true,
                 followAllRedirects: true,
 
-                body: {
+                /*body: {
                     jql: jql,
                     startAt: options.startAt || 0,
                     maxResults: options.maxResults || 1000,
                     fields: options.fields || ["summary", "status", "key", "issuetype"],
                     expand: options.expand || ['schema', 'names']
-                }
+                }*/
             };
             this.log("Calling dorequest");
             this.doRequest(options, callback);
