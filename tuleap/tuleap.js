@@ -24,7 +24,6 @@ module.exports = function(RED) {
 
         this.perform = function(query, callback, startIndex = 0) {
 
-            var toIndex = startIndex + maxIssues;
             var options = {
                 "startAt": startIndex,
             };
@@ -38,16 +37,11 @@ module.exports = function(RED) {
                     node.error("Error processing search. " + JSON.stringify(errors));
                 } else if (response.statusCode === 200) {
                     node.status({});
-                    var issues = body;
-                    if (issues) {
+                    var artefacts = body;
+                    if (artefacts) {
 
-                        node.log("Processing issues " + startIndex + " to " + toIndex + " of total " + issues.total);
+                        node.log("Processing issues ");
                         issues.issues.forEach(callback);
-                    }
-
-                    if (issues.total > toIndex) {
-                        node.log("Recursing");
-                        node.perform(jql, callback, startIndex + maxIssues);
                     }
 
                 } else if (response.statusCode === 400) {
